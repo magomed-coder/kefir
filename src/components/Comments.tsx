@@ -8,6 +8,7 @@ import CommentsList from "./CommentsList";
 import useAuthors from "src/hooks/useAuthors";
 import useComments from "src/hooks/useComments";
 import CommentsHeader from "./CommentsHeader";
+import CommentCardPlaceholder from "./CommentCardPlaceholder";
 
 const PAGES_COUNT = 3;
 
@@ -44,7 +45,11 @@ const Comments: React.FC = () => {
     const isLoading = (authorLoading || commetsLoading) && currentPage === 1;
 
     if (isLoading) {
-        content = <div>Loading...</div>;
+        const skeletons = Array.from({length: 6}, (_, index) => (
+            <CommentCardPlaceholder key={index} />
+        ));
+
+        content = <>{skeletons}</>;
     } else if (comments.length === 0) {
         content = <p>Комментариев нет!</p>;
     } else {
